@@ -3,11 +3,6 @@
 ## Overview
 This project implements a Transformer-based Language Model trained on the Penn Treebank dataset. It focuses on predicting the next token in a sequence using subword tokenization (SentencePiece BPE) and evaluates performance using token-level and sentence-level perplexity.
 
-The project demonstrates key concepts in Natural Language Processing (NLP) and highlights skills in:
-- Transformer model design and implementation.
-- Training and evaluating language models.
-- Optimizing models for specific metrics (e.g., sentence-level perplexity).
-
 ## Features
 - **Transformer Architecture**: Decoder-only Transformer with learned positional encodings.
 - **Tokenization**: Byte Pair Encoding (BPE) using SentencePiece to reduce vocabulary sparsity.
