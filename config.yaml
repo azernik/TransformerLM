@@ -1,0 +1,39 @@
+dev:
+  model:
+    d_model: 64
+    n_head: 2
+    n_layer: 2
+    dropout: 0.1
+  training:
+    learning_rate: 1e-3
+    batch_size: 4
+    num_epochs: 2
+    patience: 1
+    max_len: 10
+    vocab_size: 50
+  paths:
+    spm_model: dev_models/spm.model
+    train_text: dev_models/train.txt
+    output_dir: dev_models
+    model_checkpoint: dev_models/best_model.pth
+    submission_file: dev_submission.csv
+
+prod:
+  model:
+    d_model: 512
+    n_head: 8
+    n_layer: 6
+    dropout: 0.3
+  training:
+    learning_rate: 5e-5
+    batch_size: 64
+    num_epochs: 50
+    patience: 10
+    max_len: 50
+    vocab_size: 2000
+  paths:
+    spm_model: prod_models/spm.model
+    train_text: prod_models/train.txt
+    output_dir: prod_models
+    model_checkpoint: prod_models/best_model.pth
+    submission_file: prod_submission.csv
