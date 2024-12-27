@@ -3,6 +3,8 @@
 ## Overview
 This project implements a Transformer-based Language Model trained on the Penn Treebank dataset. It focuses on predicting the next token in a sequence using subword tokenization (SentencePiece BPE) and evaluates performance using token-level and sentence-level perplexity.
 
+Note: For a detailed explanation of the experiments and results, see the accompanying [report](https://drive.google.com/file/d/1qExlqxQSto_HKaiWWVw0KoLp83qzYdEt/view?usp=drive_link).
+
 ## Features
 - **Transformer Architecture**: Decoder-only Transformer with learned positional encodings.
 - **Tokenization**: Byte Pair Encoding (BPE) using SentencePiece to reduce vocabulary sparsity.
@@ -65,6 +67,3 @@ Pre-trained model checkpoints and submission examples are included in the reposi
 ### References
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 - [Subword Regularization](https://arxiv.org/abs/1804.10959)
-
-### Report
-For a detailed explanation of the experiments and results, see the accompanying [report](https://drive.google.com/file/d/1qExlqxQSto_HKaiWWVw0KoLp83qzYdEt/view?usp=drive_link).
