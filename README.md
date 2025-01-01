@@ -9,7 +9,8 @@ Note: For a detailed explanation of the experiments and results, see the accompa
 - **Transformer Architecture**: Decoder-only Transformer with learned positional encodings.
 - **Tokenization**: Byte Pair Encoding (BPE) using SentencePiece to reduce vocabulary sparsity.
 - **Evaluation Metrics**: Token-level perplexity and sentence-level perplexity.
-- **Training Features**: Early stopping, gradient clipping, and configurable hyperparameters.
+- **Training Features**: Early stopping, gradient clipping, mixed-precision training (AMP), and configurable hyperparameters.
+- **Parallelized Training**: Multi-GPU support for faster convergence.
 
 ## Results
 | Model Version | Token PPL | Sentence PPL | Validation Loss |
@@ -23,7 +24,7 @@ Plots and detailed comparisons can be found in the linked [report](#report).
 
 ### Prerequisites
 - Python 3.8+
-- PyTorch 2.0+
+- PyTorch 2.5+
 - Install dependencies:
   ```bash
   pip install -r requirements.txt
@@ -38,32 +39,37 @@ pip install datasets
 ### Usage
 1. **Train and Evaluate the Model**:
    ```bash
-   python main.py --output_file submission.csv
+   python main.py --config config.yaml --type prod
    ```
 
 2. **Generate Submission File**:
    The script will output a CSV file containing sentence-level perplexity scores for submission.
 
 ### Configurations
-Model and training hyperparameters can be adjusted in `main.py` via the `config` dictionary:
-```python
-config = {
-    "d_model": 512,
-    "n_head": 8,
-    "n_layer": 6,
-    "dropout": 0.3,
-    "learning_rate": 5e-5,
-    "batch_size": 64,
-    "num_epochs": 50,
-    "patience": 10,
-    "max_len": 50,
-    "vocab_size": 2000,
-}
+Model and training hyperparameters can be adjusted in `config.yaml`. Example:
+```yaml
+prod:
+  model:
+    d_model: 512
+    n_head: 8
+    n_layer: 6
+    dropout: 0.3
+  training:
+    learning_rate: 5e-5
+    batch_size: 64
+    num_epochs: 50
+    patience: 10
+    max_len: 50
+    vocab_size: 2000
+  paths:
+    spm_model: prod_models/spm.model
+    train_text: prod_models/train.txt
+    output_dir: prod_models
+    model_checkpoint: prod_models/best_model.pth
+    submission_file: prod_submission.csv
 ```
 
-### Results
-Pre-trained model checkpoints and submission examples are included in the repository.
-
-### References
-- [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
-- [Subword Regularization](https://arxiv.org/abs/1804.10959)
+### Updates to Training
+This project now uses mixed-precision training (AMP) and multi-GPU support. Ensure you have CUDA-enabled GPUs. The key updates include:
+- **Mixed Precision Training**: Automatically handled by `torch.amp.autocast("cuda")` for improved speed and memory efficiency.
+- **Multi-GPU Support**: Automatically wraps the model using `torch.nn.DataParallel` when multiple GPUs are available.
